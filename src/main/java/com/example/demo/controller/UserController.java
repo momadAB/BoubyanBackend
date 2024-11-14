@@ -14,44 +14,62 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user/")
 public class UserController {
 
-    private final UserService userService;
-    private final CustomUserDetailsService userDetailsService;
+  private final UserService userService;
+  private final CustomUserDetailsService userDetailsService;
 
-    public UserController(UserService userService, CustomUserDetailsService userDetailsService) {
-        this.userService = userService;
-        this.userDetailsService = userDetailsService;
+  public UserController(UserService userService, CustomUserDetailsService userDetailsService) {
+    this.userService = userService;
+    this.userDetailsService = userDetailsService;
+  }
+
+  @GetMapping("/sayHi")
+  public String sayHi() {
+    return "Hi, you are an authenticated user";
+  }
+
+  @PutMapping("/update-profile")
+  ResponseEntity<UserResponse> updateProfile(@RequestBody UpdateProfileRequest request) {
+    UserResponse response = userService.updateProfile(request);
+
+    // Check if the response is not null (indicating a successful update)
+    if (response != null) {
+      // Return a 201 Created status code along with some of the updated user data
+      return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else {
+      // Handle the case where the update was not successful (e.g., validation failed)
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+  }
 
-    @GetMapping("/sayHi")
-    public String sayHi(){
-        return "Hi, you are an authenticated user";
+  // The filterBefore and filterAfter parameters are optional
+  // and must be in format of yyyy-MM-dd
+  @GetMapping("/profile")
+  ResponseEntity<UserResponse> getProfile(
+      @RequestParam(required = false) String filterBefore,
+      @RequestParam(required = false) String filterAfter) {
+    UserResponse response = userService.getProfile(filterBefore, filterAfter);
+
+    // Check if the response is not null (indicating a successful get)
+    if (response != null) {
+      // Return a 200 OK status code along with some of the user data
+      return ResponseEntity.status(HttpStatus.OK).body(response);
+    } else {
+      // Handle the case where the get was not successful (e.g., validation failed)
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
+  }
 
-    @PutMapping("/update-profile")
-    ResponseEntity<UserResponse> updateProfile(@RequestBody UpdateProfileRequest request){
-        UserResponse response = userService.updateProfile(request);
+  @PutMapping("/transactions")
+  ResponseEntity<UpdateBalanceResponse> transaction(@RequestBody UpdateBalanceRequest request) {
+    UpdateBalanceResponse response = userService.updateBalance(request);
 
-        // Check if the response is not null (indicating a successful update)
-        if (response != null) {
-            // Return a 201 Created status code along with some of the updated user data
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            // Handle the case where the update was not successful (e.g., validation failed)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    // Check if the response is not null (indicating a successful get)
+    if (response != null) {
+      // Return a 201 Created status code along with some of the user data
+      return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } else {
+      // Handle the case where the get was not successful (e.g., validation failed)
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
-
-    @GetMapping("/profile")
-    ResponseEntity<UserResponse> getProfile() {
-        UserResponse response = userService.getProfile();
-
-        // Check if the response is not null (indicating a successful get)
-        if (response != null) {
-            // Return a 201 Created status code along with some of the user data
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            // Handle the case where the get was not successful (e.g., validation failed)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-    }
+  }
 }

@@ -8,7 +8,13 @@ import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.auth.CustomUserDetailsService;
 import com.example.demo.util.Roles;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -106,14 +112,28 @@ public class UserServiceImpl implements UserService {
     return response;
   }
 
-  public UserResponse getProfile() {
+  public UserResponse getProfile(String filterBefore, String filterAfter) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String username = authentication.getName();
 
     CustomUserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-    UserResponse response =
-        new UserResponse(
+    // Parse the date filters if they are provided
+    LocalDate beforeDate = filterBefore != null ? LocalDate.parse(filterBefore, DateTimeFormatter.ISO_DATE) : null;
+    LocalDate afterDate = filterAfter != null ? LocalDate.parse(filterAfter, DateTimeFormatter.ISO_DATE) : null;
+
+    // Filter transactions based on the date range
+    List<TransactionEntity> filteredTransactions = userDetails.getTransactions().stream()
+            .filter(transaction -> {
+              LocalDate transactionDate = transaction.getTransactionDate().toLocalDate();
+              boolean isAfter = (afterDate == null || transactionDate.isAfter(afterDate) || transactionDate.isEqual(afterDate));
+              boolean isBefore = (beforeDate == null || transactionDate.isBefore(beforeDate) || transactionDate.isEqual(beforeDate));
+              return isAfter && isBefore;
+            })
+            .collect(Collectors.toList());
+
+    // Build the UserResponse with filtered transactions
+    UserResponse response = new UserResponse(
             userDetails.getId(),
             userDetails.getUsername(),
             userDetails.getRole(),
@@ -122,7 +142,7 @@ public class UserServiceImpl implements UserService {
             userDetails.getEmail(),
             userDetails.getBankAccount().getBalance(),
             userDetails.getBankAccount().getId(),
-            userDetails.getTransactions());
+            filteredTransactions); // Pass the filtered transactions
 
     return response;
   }
