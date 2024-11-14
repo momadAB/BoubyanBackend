@@ -2,38 +2,102 @@ package com.example.demo.bo;
 
 public class UserResponse {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String username;
 
-    private String status;
+  private String role;
 
-    public UserResponse(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  private String phoneNumber;
 
-    public Long getId() {
-        return id;
-    }
+  private String address;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  private String email;
 
-    public String getName() {
-        return name;
-    }
+  private Double balance;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  private Long bankId;
 
-    public String getStatus() {
-        return status;
-    }
+  public UserResponse(Long id, String username, String role, String address, String phoneNumber, String email, Double balance, Long bankId) {
+    this.id = id;
+    this.username = username;
+    this.role = role;
+    this.phoneNumber = phoneNumber;
+    this.address = address;
+    this.email = email;
+    this.balance = balance;
+    this.bankId = bankId;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public double getBalance() {
+    return balance;
+  }
+
+  public void setBalance(double balance) {
+    this.balance = balance;
+  }
+
+  public Long getBankId() {
+    return bankId;
+  }
+
+  public void setBankId(Long bankId) {
+    this.bankId = bankId;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+//  public String getStatus() {
+//    return status;
+//  }
+//
+//  public void setStatus(String status) {
+//    this.status = status;
+//  }
 }

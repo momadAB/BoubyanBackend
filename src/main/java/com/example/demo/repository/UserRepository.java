@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    List<UserEntity> findByStatus(Status status);
-    Optional<UserEntity> findByUsername(String username);
+//    List<UserEntity> findByStatus(Status status);
+    // Find by username, ignoring case
+    Optional<UserEntity> findByUsernameIgnoreCase(String username);
 }

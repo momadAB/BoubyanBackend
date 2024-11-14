@@ -22,14 +22,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private CustomUserDetails buildCustomUserDetailsOfUsername(String username){
-        UserEntity user = userRepository.findByUsername(username)
+        UserEntity user = userRepository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new UserNotFoundException("Incorrect Username"));
 
         CustomUserDetails userDetails = new CustomUserDetails();
         userDetails.setId(user.getId());
         userDetails.setUserName(user.getUsername());
         userDetails.setPassword(user.getPassword());
-        userDetails.setRole(user.getRole());
+        userDetails.setRole(user.getRole().toString());
+        userDetails.setPhone(user.getPhoneNumber());
+        userDetails.setEmail(user.getEmail());
+        userDetails.setAddress(user.getAddress());
 
         return userDetails;
     }

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
-import com.example.demo.util.Status;
+import com.example.demo.util.Roles;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity

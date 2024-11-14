@@ -52,7 +52,6 @@ public class AuthServiceImpl implements AuthService{
         AuthenticationResponse response = new AuthenticationResponse();
         response.setId(userDetails.getId());
         response.setUsername(userDetails.getUsername());
-        //response.setPassword(userDetails.getPassword());
         response.setRole(userDetails.getRole());
         response.setToken("Bearer " + accessToken);
 
