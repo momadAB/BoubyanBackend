@@ -1,12 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.bo.UserResponse;
+import com.example.demo.entity.TransactionEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.auth.CustomUserDetailsService;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.example.demo.util.TransactionType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,4 +74,21 @@ public class AdminServiceImpl implements AdminService {
     userRepository.deleteById(id);
     return user;
   }
+
+  @Override
+  public List<TransactionEntity> getAllDeposits() {
+    List<UserEntity> users = userRepository.findAll();
+    List<TransactionEntity> depositTransactions = new ArrayList<>();
+
+    for (UserEntity user : users) {
+      for (TransactionEntity transaction : user.getTransactions()) {
+        if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
+          depositTransactions.add(transaction);
+        }
+      }
+    }
+
+    return depositTransactions;
+  }
+
 }
