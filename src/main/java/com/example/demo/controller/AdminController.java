@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.bo.UserProfileResponse;
 import com.example.demo.bo.UserResponse;
 import com.example.demo.service.AdminService;
 import org.springframework.http.HttpStatus;

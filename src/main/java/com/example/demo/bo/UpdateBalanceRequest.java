@@ -2,7 +2,7 @@ package com.example.demo.bo;
 
 import com.example.demo.util.TransactionType;
 
-public class UserTransactionRequest {
+public class UpdateBalanceRequest {
     private Long toUserId;
     private Double amount;
     private TransactionType transactionType;

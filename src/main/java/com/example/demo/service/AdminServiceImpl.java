@@ -43,7 +43,8 @@ public class AdminServiceImpl implements AdminService {
                     user.getPhoneNumber(),
                     user.getAddress(),
                     user.getBankAccount().getBalance(),
-                    user.getBankAccount().getId()))
+                    user.getBankAccount().getId(),
+                    user.getTransactions()))
         .collect(Collectors.toList());
   }
 
@@ -57,7 +58,8 @@ public class AdminServiceImpl implements AdminService {
         user.getPhoneNumber(),
         user.getAddress(),
         user.getBankAccount().getBalance(),
-        user.getBankAccount().getId());
+        user.getBankAccount().getId(),
+            user.getTransactions());
   }
 
   @Override

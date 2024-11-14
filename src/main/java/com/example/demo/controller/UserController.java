@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.bo.UpdateBalanceRequest;
+import com.example.demo.bo.UpdateBalanceResponse;
 import com.example.demo.bo.UpdateProfileRequest;
-import com.example.demo.bo.UserProfileResponse;
+import com.example.demo.bo.UserResponse;
 import com.example.demo.service.UserService;
 import com.example.demo.service.auth.CustomUserDetailsService;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,8 @@ public class UserController {
     }
 
     @PutMapping("/update-profile")
-    ResponseEntity<UserProfileResponse> updateProfile(@RequestBody UpdateProfileRequest request){
-        UserProfileResponse response = userService.updateProfile(request);
+    ResponseEntity<UserResponse> updateProfile(@RequestBody UpdateProfileRequest request){
+        UserResponse response = userService.updateProfile(request);
 
         // Check if the response is not null (indicating a successful update)
         if (response != null) {
@@ -40,8 +42,8 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    ResponseEntity<UserProfileResponse> getProfile() {
-        UserProfileResponse response = userService.getProfile();
+    ResponseEntity<UserResponse> getProfile() {
+        UserResponse response = userService.getProfile();
 
         // Check if the response is not null (indicating a successful get)
         if (response != null) {

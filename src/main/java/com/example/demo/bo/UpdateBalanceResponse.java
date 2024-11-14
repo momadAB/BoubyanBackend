@@ -1,6 +1,6 @@
 package com.example.demo.bo;
 
-public class UserBalanceResponse {
+public class UpdateBalanceResponse {
     private Long fromUserId;
     private Long toUserId;
     private Double newBalance;

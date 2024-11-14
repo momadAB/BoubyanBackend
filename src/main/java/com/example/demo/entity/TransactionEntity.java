@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.util.TransactionType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class TransactionEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private UserEntity user;
 
     @Column(nullable = false)

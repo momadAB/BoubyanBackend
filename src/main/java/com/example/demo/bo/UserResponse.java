@@ -1,5 +1,10 @@
 package com.example.demo.bo;
 
+import com.example.demo.entity.TransactionEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.List;
+
 public class UserResponse {
 
   private Long id;
@@ -18,7 +23,18 @@ public class UserResponse {
 
   private Long bankId;
 
-  public UserResponse(Long id, String username, String role, String address, String phoneNumber, String email, Double balance, Long bankId) {
+  private List<TransactionEntity> transactions;
+
+  public UserResponse(
+      Long id,
+      String username,
+      String role,
+      String address,
+      String phoneNumber,
+      String email,
+      Double balance,
+      Long bankId,
+      List<TransactionEntity> transactions) {
     this.id = id;
     this.username = username;
     this.role = role;
@@ -27,10 +43,23 @@ public class UserResponse {
     this.email = email;
     this.balance = balance;
     this.bankId = bankId;
+    this.transactions = transactions;
+  }
+
+  public List<TransactionEntity> getTransactions() {
+    return transactions;
+  }
+
+  public void setTransactions(List<TransactionEntity> transactions) {
+    this.transactions = transactions;
   }
 
   public double getBalance() {
     return balance;
+  }
+
+  public void setBalance(Double balance) {
+    this.balance = balance;
   }
 
   public void setBalance(double balance) {
@@ -93,11 +122,11 @@ public class UserResponse {
     this.username = username;
   }
 
-//  public String getStatus() {
-//    return status;
-//  }
-//
-//  public void setStatus(String status) {
-//    this.status = status;
-//  }
+  //  public String getStatus() {
+  //    return status;
+  //  }
+  //
+  //  public void setStatus(String status) {
+  //    this.status = status;
+  //  }
 }

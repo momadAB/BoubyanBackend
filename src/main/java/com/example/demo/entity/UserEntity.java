@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import com.example.demo.util.Roles;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import javax.persistence.*;
 
@@ -28,6 +30,7 @@ public class UserEntity {
   private BankAccountEntity bankAccount;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
   private List<TransactionEntity> transactions;
 
   public List<TransactionEntity> getTransactions() {

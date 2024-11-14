@@ -4,7 +4,8 @@ import com.example.demo.bo.*;
 
 public interface UserService {
     UserResponse createUser(CreateUserRequest request);
-    UserProfileResponse updateProfile(UpdateProfileRequest request);
-    UserProfileResponse getProfile();
-//    UserBalanceResponse withdraw(UserTransactionRequest request);
+    UserResponse updateProfile(UpdateProfileRequest request);
+    UserResponse getProfile();
+    public UpdateBalanceResponse updateBalance(UpdateBalanceRequest request);
+    //    UserBalanceResponse withdraw(UserTransactionRequest request);
 }
