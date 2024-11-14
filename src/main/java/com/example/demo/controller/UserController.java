@@ -27,6 +27,7 @@ public class UserController {
     return "Hi, you are an authenticated user";
   }
 
+  // Update profile for logged in user
   @PutMapping("/update-profile")
   ResponseEntity<UserResponse> updateProfile(@RequestBody UpdateProfileRequest request) {
     UserResponse response = userService.updateProfile(request);
@@ -41,6 +42,7 @@ public class UserController {
     }
   }
 
+  // Get profile for logged in user, optionally filter by date
   // The filterBefore and filterAfter parameters are optional
   // and must be in format of yyyy-MM-dd
   @GetMapping("/profile")
@@ -59,6 +61,13 @@ public class UserController {
     }
   }
 
+  // Make transactions for logged in user
+  // The request body must be in format of UpdateBalanceRequest
+  // Which is:
+  // - toUserId: Long
+  // - amount: Double
+  // - transactionType: TransactionType
+  // The transactionType must be one of the following: DEPOSIT, WITHDRAW, TRANSFER
   @PutMapping("/transactions")
   ResponseEntity<UpdateBalanceResponse> transaction(@RequestBody UpdateBalanceRequest request) {
     UpdateBalanceResponse response = userService.updateBalance(request);
