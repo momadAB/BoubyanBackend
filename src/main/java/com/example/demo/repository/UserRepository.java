@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.bo.UserProfileResponse;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.util.Status;
 import org.springframework.data.jpa.repository.JpaRepository;

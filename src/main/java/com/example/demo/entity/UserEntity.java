@@ -7,82 +7,121 @@ import javax.persistence.*;
 @Entity
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String name;
+  @Column(name = "username", nullable = false)
+  private String username;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+  private String email;
+  private String phoneNumber;
+  private String address;
 
-    @Column(name="user_name", nullable = false)
-    private String username;
+  @Column(name = "password", nullable = false)
+  private String password;
 
-    @Column(name = "password",nullable = false)
-    private String password;
-/*
-    @OneToOne
-    @JoinColumn(name = "role_id")
-    private RoleEntity role;
+  @Enumerated(EnumType.STRING)
+  private Roles role;
 
- */
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private BankAccountEntity bankAccount;
 
-    String role;
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<TransactionEntity> transactions;
 
-    public Long getId() {
-        return id;
-    }
+  public List<TransactionEntity> getTransactions() {
+    return transactions;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setTransactions(List<TransactionEntity> transactions) {
+    this.transactions = transactions;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public BankAccountEntity getBankAccount() {
+    return bankAccount;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setBankAccount(BankAccountEntity bankAccount) {
+    this.bankAccount = bankAccount;
+  }
 
-    public Status getStatus() {
-        return status;
-    }
+  /*
+     @OneToOne
+     @JoinColumn(name = "role_id")
+     private RoleEntity role;
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+  */
 
-    public String getUsername() {
-        return username;
-    }
+  //    private String username;
+  //    private String email;
+  //    private String phoneNumber;
+  //    private String address;
+  //    private String password;
+  //    private String role;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-/*
-    public RoleEntity getRole() {
-        return role;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
-    }*/
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public String getRole() {
-        return role;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public Roles getRole() {
+    return role;
+  }
+
+  public void setRole(Roles role) {
+    this.role = role;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+  /*
+  public RoleEntity getRole() {
+      return role;
+  }
+
+  public void setRole(RoleEntity role) {
+      this.role = role;
+  }*/
+
 }
