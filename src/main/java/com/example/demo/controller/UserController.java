@@ -43,4 +43,24 @@ public class UserController {
     }
   }
 
+  @PostMapping("/transfer")
+  public ResponseEntity<TransferResponse> transfer(@RequestBody TransferRequest request) {
+    try {
+      // Get the authenticated user's username
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      String username = authentication.getName();
+
+      // Transfer the balance
+      TransferResponse response = userService.transfer(username, request);
+
+      if (response != null) {
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+      } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+      }
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+  }
+
 }

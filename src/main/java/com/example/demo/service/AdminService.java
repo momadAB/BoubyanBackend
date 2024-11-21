@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.bo.MessageResponse;
 import com.example.demo.bo.UserResponse;
-import com.example.demo.entity.TransactionEntity;
 
 import java.util.List;
 

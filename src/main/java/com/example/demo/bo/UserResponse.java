@@ -1,9 +1,5 @@
 package com.example.demo.bo;
 
-import com.example.demo.entity.TransactionEntity;
-
-import java.util.List;
-
 public class UserResponse {
 
   private Long id;

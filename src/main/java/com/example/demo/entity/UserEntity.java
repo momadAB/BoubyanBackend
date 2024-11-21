@@ -38,7 +38,7 @@ public class UserEntity {
   private Roles role;
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "account_entity", referencedColumnName = "id", nullable = false)
   private AccountEntity accountEntity;
 
   @Enumerated(EnumType.STRING)

@@ -9,5 +9,6 @@ public interface UserService {
     void handleFailedLogin(String username);
     void handleSuccessfulLogin(String username);
     BalanceResponse getBalanceByUsername(String username);
+    TransferResponse transfer(String username, TransferRequest request);
     //    UserBalanceResponse withdraw(UserTransactionRequest request);
 }

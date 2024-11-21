@@ -81,6 +81,46 @@ public class UserServiceImpl implements UserService {
             userEntity.getAccountEntity().getBalance());
   }
 
+  @Override
+  public TransferResponse transfer(String username, TransferRequest request) {
+    try {
+    // Validate the sender's user
+    UserEntity sender = userRepository.findByUsernameIgnoreCase(username)
+            .orElseThrow(() -> new RuntimeException("Sender not found"));
+
+    // Validate the recipient's user
+    UserEntity recipient = userRepository.findByAccountEntity_AccountNumber(String.valueOf(request.getToAccountNumber()))
+            .orElseThrow(() -> new RuntimeException("Recipient account not found"));
+
+    // Check if sender has sufficient balance
+    AccountEntity senderAccount = sender.getAccountEntity();
+    if (senderAccount.getBalance() < request.getAmount()) {
+      throw new RuntimeException("Insufficient balance for transfer");
+    }
+
+    // Perform the transfer
+    senderAccount.setBalance(senderAccount.getBalance() - request.getAmount());
+    recipient.getAccountEntity().setBalance(
+            recipient.getAccountEntity().getBalance() + request.getAmount()
+    );
+
+    // Save the updated accounts
+    accountRepository.save(senderAccount);
+    accountRepository.save(recipient.getAccountEntity());
+
+    // Create the response
+    TransferResponse response = new TransferResponse();
+    response.setMessage("Transfer successful");
+
+    return response;
+    } catch (Exception e) {
+      TransferResponse response = new TransferResponse();
+      response.setError("Insufficient balance or account doesn't exist");
+      return response;
+    }
+  }
+
+
   public UserResponse getProfile(String filterBefore, String filterAfter) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String username = authentication.getName();
