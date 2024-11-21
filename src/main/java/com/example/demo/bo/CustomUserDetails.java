@@ -1,66 +1,24 @@
 package com.example.demo.bo;
 
-import com.example.demo.entity.BankAccountEntity;
-import com.example.demo.entity.TransactionEntity;
-import java.util.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.*;
+
 public class CustomUserDetails implements UserDetails {
 
   private Long id;
-  private String userName;
+  private String firstName;
+  private String lastName;
+  private String username;
   private String password;
-  private String email;
-  private String address;
-  private String phone;
+  private String civilId;
+  private String mobileNumber;
   private String role;
-  private List<TransactionEntity> transactions;
-  private BankAccountEntity bankAccount;
-
-  public BankAccountEntity getBankAccount() {
-    return bankAccount;
-  }
-
-  public void setBankAccount(BankAccountEntity bankAccount) {
-    this.bankAccount = bankAccount;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public List<TransactionEntity> getTransactions() {
-    return transactions;
-  }
-
-  public void setTransactions(List<TransactionEntity> transactions) {
-    this.transactions = transactions;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getPhoneNumber() {
-    return phone;
+  // Getters and setters for new fields
+  public String getFirstName() {
+    return firstName;
   }
 
   public Long getId() {
@@ -71,14 +29,33 @@ public class CustomUserDetails implements UserDetails {
     this.id = id;
   }
 
-  public String getUserName() {
-    return userName;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public String getLastName() {
+    return lastName;
   }
 
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getCivilId() {
+    return civilId;
+  }
+
+  public void setCivilId(String civilId) {
+    this.civilId = civilId;
+  }
+
+  public String getMobileNumber() {
+    return mobileNumber;
+  }
+
+  public void setMobileNumber(String mobileNumber) {
+    this.mobileNumber = mobileNumber;
+  }
   public String getRole() {
     return role;
   }
@@ -103,7 +80,11 @@ public class CustomUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return userName;
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   @Override
@@ -128,11 +109,13 @@ public class CustomUserDetails implements UserDetails {
 
   public Map<String, Object> getClaims() {
     HashMap<String, Object> claims = new HashMap<>();
-
     claims.put("id", this.id);
-    claims.put("userName", this.userName);
+    claims.put("firstName", this.firstName);
+    claims.put("lastName", this.lastName);
+    claims.put("userName", this.username);
     claims.put("role", role);
-
+    claims.put("civilId", civilId);
+    claims.put("mobileNumber", mobileNumber);
     return claims;
   }
 }

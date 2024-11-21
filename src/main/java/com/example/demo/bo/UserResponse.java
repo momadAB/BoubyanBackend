@@ -1,7 +1,6 @@
 package com.example.demo.bo;
 
 import com.example.demo.entity.TransactionEntity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -9,101 +8,34 @@ public class UserResponse {
 
   private Long id;
 
+  private String firstName;
+
+  private String lastName;
+
   private String username;
 
   private String role;
 
-  private String phoneNumber;
+  private String mobileNumber;
 
-  private String address;
-
-  private String email;
-
-  private Double balance;
-
-  private Long bankId;
-
-  private List<TransactionEntity> transactions;
+  private String civilId;
 
   public UserResponse(
-      Long id,
-      String username,
-      String role,
-      String address,
-      String phoneNumber,
-      String email,
-      Double balance,
-      Long bankId,
-      List<TransactionEntity> transactions) {
+          Long id,
+          String firstName,
+          String lastName,
+          String username,
+          String role,
+          String mobileNumber,
+          String civilId
+  ) {
     this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.username = username;
     this.role = role;
-    this.phoneNumber = phoneNumber;
-    this.address = address;
-    this.email = email;
-    this.balance = balance;
-    this.bankId = bankId;
-    this.transactions = transactions;
-  }
-
-  public List<TransactionEntity> getTransactions() {
-    return transactions;
-  }
-
-  public void setTransactions(List<TransactionEntity> transactions) {
-    this.transactions = transactions;
-  }
-
-  public double getBalance() {
-    return balance;
-  }
-
-  public void setBalance(Double balance) {
-    this.balance = balance;
-  }
-
-  public void setBalance(double balance) {
-    this.balance = balance;
-  }
-
-  public Long getBankId() {
-    return bankId;
-  }
-
-  public void setBankId(Long bankId) {
-    this.bankId = bankId;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
+    this.mobileNumber = mobileNumber;
+    this.civilId = civilId;
   }
 
   public Long getId() {
@@ -114,6 +46,22 @@ public class UserResponse {
     this.id = id;
   }
 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
   public String getUsername() {
     return username;
   }
@@ -122,11 +70,27 @@ public class UserResponse {
     this.username = username;
   }
 
-  //  public String getStatus() {
-  //    return status;
-  //  }
-  //
-  //  public void setStatus(String status) {
-  //    this.status = status;
-  //  }
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
+
+  public String getMobileNumber() {
+    return mobileNumber;
+  }
+
+  public void setMobileNumber(String mobileNumber) {
+    this.mobileNumber = mobileNumber;
+  }
+
+  public String getCivilId() {
+    return civilId;
+  }
+
+  public void setCivilId(String civilId) {
+    this.civilId = civilId;
+  }
 }

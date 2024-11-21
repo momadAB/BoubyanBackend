@@ -1,17 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.bo.MessageResponse;
 import com.example.demo.bo.UserResponse;
-import com.example.demo.entity.TransactionEntity;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.repository.BankRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.auth.CustomUserDetailsService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.demo.util.TransactionType;
+import com.example.demo.util.Status;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,18 +18,24 @@ public class AdminServiceImpl implements AdminService {
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final CustomUserDetailsService userDetailsService;
-  private final BankRepository bankRepository;
 
   public AdminServiceImpl(
       UserRepository userRepository,
       BCryptPasswordEncoder bCryptPasswordEncoder,
-      CustomUserDetailsService userDetailsService,
-      BankRepository bankRepository) {
+      CustomUserDetailsService userDetailsService) {
     this.userRepository = userRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.userDetailsService = userDetailsService;
-    this.bankRepository = bankRepository;
   }
+
+  @Override
+  public MessageResponse activateAccount(Long id) {
+    UserEntity user = userRepository.getById(id);
+    user.setAccountStatus(Status.ACTIVE);
+    userRepository.save(user);
+    return new MessageResponse(user.getFirstName() + " account has been reactivated");
+  }
+
 
   public List<UserResponse> getAllUsers() {
     List<UserEntity> users = userRepository.findAll();
@@ -40,16 +44,14 @@ public class AdminServiceImpl implements AdminService {
     return users.stream()
         .map(
             user ->
-                new UserResponse(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getRole().toString(),
-                    user.getEmail(),
-                    user.getPhoneNumber(),
-                    user.getAddress(),
-                    user.getBankAccount().getBalance(),
-                    user.getBankAccount().getId(),
-                    user.getTransactions()))
+    new UserResponse(
+            user.getId(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            user.getRole().toString(),
+            user.getMobileNumber(),
+            user.getCivilId()))
         .collect(Collectors.toList());
   }
 
@@ -57,38 +59,13 @@ public class AdminServiceImpl implements AdminService {
     UserEntity user = userRepository.getById(id);
     return new UserResponse(
         user.getId(),
-        user.getUsername(),
-        user.getRole().toString(),
-        user.getEmail(),
-        user.getPhoneNumber(),
-        user.getAddress(),
-        user.getBankAccount().getBalance(),
-        user.getBankAccount().getId(),
-            user.getTransactions());
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            user.getRole().toString(),
+            user.getMobileNumber(),
+            user.getCivilId());
   }
 
-  @Override
-  public UserResponse deleteUserById(Long id) {
-    UserResponse user = getUserById(id);
-
-    userRepository.deleteById(id);
-    return user;
-  }
-
-  @Override
-  public List<TransactionEntity> getAllDeposits() {
-    List<UserEntity> users = userRepository.findAll();
-    List<TransactionEntity> depositTransactions = new ArrayList<>();
-
-    for (UserEntity user : users) {
-      for (TransactionEntity transaction : user.getTransactions()) {
-        if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
-          depositTransactions.add(transaction);
-        }
-      }
-    }
-
-    return depositTransactions;
-  }
 
 }

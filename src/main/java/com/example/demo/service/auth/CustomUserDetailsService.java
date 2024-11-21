@@ -29,14 +29,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     CustomUserDetails userDetails = new CustomUserDetails();
     userDetails.setId(user.getId());
-    userDetails.setUserName(user.getUsername());
+    userDetails.setUsername(user.getUsername());
     userDetails.setPassword(user.getPassword());
     userDetails.setRole(user.getRole().toString());
-    userDetails.setPhone(user.getPhoneNumber());
-    userDetails.setEmail(user.getEmail());
-    userDetails.setAddress(user.getAddress());
-    userDetails.setTransactions(user.getTransactions());
-    userDetails.setBankAccount(user.getBankAccount());
+    userDetails.setFirstName(user.getFirstName());
+    userDetails.setLastName(user.getLastName());
+    userDetails.setCivilId(user.getCivilId());
+    userDetails.setMobileNumber(user.getMobileNumber());
 
     return userDetails;
   }

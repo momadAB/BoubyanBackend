@@ -4,15 +4,37 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateUserRequest {
-    private String username;
-    private String email;
-    private String phoneNumber;
-    private String address;
-    private String password;
-    private String role;
 
-    public CreateUserRequest () {
+    private String firstName;
+
+    private String lastName;
+
+    private String username;
+
+    private String password;
+
+    private String civilId;
+
+    private String mobileNumber;
+
+    public CreateUserRequest() {
         // Default constructor
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -31,35 +53,19 @@ public class CreateUserRequest {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getCivilId() {
+        return civilId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setCivilId(String civilId) {
+        this.civilId = civilId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }

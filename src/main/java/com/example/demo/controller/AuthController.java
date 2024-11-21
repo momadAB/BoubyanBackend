@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.bo.CreateUserRequest;
-import com.example.demo.bo.UserResponse;
+import com.example.demo.bo.OnboardingResponse;
 import com.example.demo.bo.auth.AuthenticationResponse;
 import com.example.demo.bo.auth.CreateLoginRequest;
-import com.example.demo.bo.auth.LogoutResponse;
 import com.example.demo.service.UserService;
 import com.example.demo.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,43 +18,48 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth/")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @Autowired
-    private AuthService authService;
+  @Autowired private AuthService authService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
-        UserResponse response = userService.createUser(request);
+  @PostMapping("/signup")
+  public ResponseEntity<OnboardingResponse> createUser(@RequestBody CreateUserRequest request) {
+    try {
 
-        // Check if the response is not null (indicating a successful creation)
-        if (response != null) {
-            // Return a 201 Created status code along with the created user data
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } else {
-            // Handle the case where the creation was not successful (e.g., validation failed)
-            // You can return a different status code or error message as needed
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+      OnboardingResponse response = userService.createUser(request);
+
+      // Check if the response is not null (indicating a successful creation)
+      if (response != null) {
+        // Return a 201 Created status code along with the created user data
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+      } else {
+        // Handle the case where the creation was not successful (e.g., validation failed)
+        // You can return a different status code or error message as needed
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+      }
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody CreateLoginRequest authenticationRequest) {
-        AuthenticationResponse authenticationResponse = authService.login(authenticationRequest);
-        HttpStatus status = HttpStatus.OK;
+  @PostMapping("/login")
+  public ResponseEntity<AuthenticationResponse> login(
+      @RequestBody CreateLoginRequest authenticationRequest) {
 
-        if (authenticationResponse == null) {
-            status = HttpStatus.BAD_REQUEST;
-        }
+    try {
+      AuthenticationResponse authenticationResponse = authService.login(authenticationRequest);
+      HttpStatus status = HttpStatus.OK;
 
-        return new ResponseEntity<>(authenticationResponse, status);
+      if (authenticationResponse == null) {
+        userService.handleFailedLogin(authenticationRequest.getUsername());
+        status = HttpStatus.BAD_REQUEST;
+      } else {
+        userService.handleSuccessfulLogin(authenticationRequest.getUsername());
+      }
+
+      return new ResponseEntity<>(authenticationResponse, status);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
-
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody LogoutResponse auntenticationRequset) {
-        authService.logout(auntenticationRequset);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+  }
 }

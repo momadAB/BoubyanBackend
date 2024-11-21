@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.bo.MessageResponse;
+import com.example.demo.bo.ReactivateUserRequest;
 import com.example.demo.bo.UserResponse;
 import com.example.demo.entity.TransactionEntity;
 import com.example.demo.service.AdminService;
@@ -24,37 +26,8 @@ public class AdminController {
     return "Hi, you are an authenticated admin";
   }
 
-  // Admin gets all users profiles
-  @GetMapping("/getAllUsers")
-  public List<UserResponse> getAllProfiles() {
-    // Fetch all users from the admin service
-    return adminService.getAllUsers();
-  }
-
-  // Admin views user profile of specific ID
-  @GetMapping("/getUser/{id}")
-  public UserResponse findUserById(@PathVariable Long id) {
-    return adminService.getUserById(id);
-  }
-
-  // Admin deletes user with specified ID
-  @DeleteMapping("/deleteUser/{id}")
-  public ResponseEntity<UserResponse> deleteUserById(@PathVariable Long id) {
-    UserResponse response = (adminService.deleteUserById(id));
-
-    // Check if the response is not null (indicating a successful deletion)
-    if (response != null) {
-      // Return a 201 Created status code along with some of the deleted user data
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
-    } else {
-      // Handle the case where the update was not successful (e.g., delete failed)
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
-  }
-
-  // Admin gets all deposit transactions
-  @GetMapping("/transaction/status")
-  public List<TransactionEntity> getAllDeposits() {
-    return adminService.getAllDeposits();
+  @PostMapping("/reactivate")
+  public MessageResponse reactivateAccount(@RequestBody ReactivateUserRequest request) {
+    return adminService.activateAccount(request.getId());
   }
 }

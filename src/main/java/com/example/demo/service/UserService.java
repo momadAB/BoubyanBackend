@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.bo.*;
 
 public interface UserService {
-    UserResponse createUser(CreateUserRequest request);
-    UserResponse updateProfile(UpdateProfileRequest request);
+    OnboardingResponse createUser(CreateUserRequest request);
+    // UserResponse updateProfile(UpdateProfileRequest request);
     UserResponse getProfile(String filterBefore, String filterAfter);
-    public UpdateBalanceResponse updateBalance(UpdateBalanceRequest request);
+    void handleFailedLogin(String username);
+    void handleSuccessfulLogin(String username);
+    BalanceResponse getBalanceByUsername(String username);
     //    UserBalanceResponse withdraw(UserTransactionRequest request);
 }

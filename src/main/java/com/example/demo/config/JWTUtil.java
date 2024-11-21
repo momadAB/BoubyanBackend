@@ -43,7 +43,8 @@ public class JWTUtil {
                 .setIssuedAt(new Date(System.currentTimeMillis())) /* this line mean when the token is created this will help us when we want to calculate the
                  * expiration date for the token so we can know if the token valid or not
                  */
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)))
+                // 5 minute timeout
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)))
                 .signWith(SignatureAlgorithm.HS256, jwtSignKey).compact();
     }
 
